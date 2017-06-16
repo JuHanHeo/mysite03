@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jx372.mysite.service.GuestBookService;
 import com.jx372.mysite.vo.GuestBookVo;
@@ -35,12 +36,12 @@ public class GuestBookController {
 	}
 	
 	@RequestMapping("/deleteform")
-	public String deleteform(@PathVariable("no") String no){
+	public String deleteform(@RequestParam("no") String no){
 		return "/guestbook/deleteform";
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(@PathVariable("no") String no){
+	public String delete(@RequestParam("no") String no){
 		
 		guestBookService.delete(no);
 		
