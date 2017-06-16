@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<select id="getCount" parameterType="String" resultType="int">
+	<![CDATA[
+	select ceil(count(*)/5) 
+	from board b, member m 
+	where m.no = b.user_no 
+	and b.title like #{kwd} 
+	and b.content like #{kwd} 
+	]]>
+	</select>
+	
+	<select id="getList" parameterType="map" resultType="boardvo">
+	<![CDATA[
+	select b.no no, b.title title, b.content content, b.reg_date regDate, b.hit hit, b.group_no groupNo, b.order_no orderNo, b.depth depth, b.user_no userNo, m.name userName
+	from board b, member m 
+	where m.no = b.user_no 
+	and b.title like #{kwd} 
+	and b.content like #{kwd} 
+	order by b.group_no desc, order_no 
+	limit #{start},5
+	]]>
+	</select>
+	
+	<select id="getByNo" parameterType="int" resultType="boardvo">
+	<![CDATA[
+	select no, title, content, user_no userNo, group_no groupNo, order_no orderNo, depth 
+	from board 
+	where no = #{no}
+	]]>
+	</select>
+	
+	<update id="update" parameterType="boardvo">
+	<![CDATA[
+	update board set title = #{title}, content = #{content} where no = #{no}
+	]]>
+	</update>
+	
+	<insert id="insert" parameterType="boardvo">
+	<![CDATA[
+	insert into board values(null, #{title}, #{content}, now(), 0, 
+	]]>
+	<choose>
+		<when test="groupNo==-1">
+		<![CDATA[ (select max(b.group_no) from board b)+1, 1, 0, #{userNo}) ]]>
+		</when>
+		<otherwise>
+		<![CDATA[ #{groupNo}, #{orderNo}+1, #{depth}+1, #{userNo}) ]]>
+		</otherwise>
+	</choose>
+	</insert>
+	
+	<update id="updateOrderNo" parameterType="boardvo">
+	<![CDATA[
+		update board set order_no = order_no + 1 where group_no = #{groupNo} and order_no >= #{orderNo}+1
+	]]>
+	</update>
+	
+	<select id="lastInsertId" resultType="int">
+	<![CDATA[
+	select last_insert_id()
+	]]>
+	</select>
+	
+	<delete id="delete" parameterType="int">
+	<![CDATA[
+	delete from board where no = #{no}
+	]]>
+	</delete>
+	
+	<update id="addHit" parameterType="int">
+	<![CDATA[
+	update board set hit = hit+1 where no = #{no}
+	]]>
+	</update>
+
+</mapper>

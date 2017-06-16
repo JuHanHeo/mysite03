@@ -18,8 +18,9 @@ public class GuestBookService {
 		List<GuestBookVo> list = guestBookDao.getList();
 		return list;
 	}
-	public void insert(GuestBookVo vo){
-		guestBookDao.insert(vo);
+	public boolean insert(GuestBookVo vo){
+		boolean result = guestBookDao.insert(vo);
+		return result;
 	}
 	
 	public void delete(String no){

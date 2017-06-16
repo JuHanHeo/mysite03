@@ -2,6 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+pageContext.setAttribute("newLine", "\n");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +29,7 @@
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								${vo.content }
+								${fn:replace(vo.content, newLine, "<br>") }
 							</div>
 						</td>
 					</tr>
@@ -34,14 +37,14 @@
 				
 				
 				<div class="bottom">
-				<a href="/mysite/board?p=1">글목록</a>
+				<a href="${pageContext.servletContext.contextPath }/board/list?p=${param.p}">글목록</a>
 						
 						<c:if test="${!empty authUser }">
-						<a href="${pageContext.servletContext.contextPath }/board?a=writeform&pgno=${vo.groupNo}&pono=${vo.orderNo}&pdepth=${vo.depth}">답글달기</a>
+						<a href="${pageContext.servletContext.contextPath }/board/write?pgno=${vo.groupNo}&pono=${vo.orderNo}&pdepth=${vo.depth}">답글달기</a>
 						</c:if>
 						
 						<c:if test="${authUser.no==vo.userNo }">
-						<a href="${pageContext.servletContext.contextPath }/board?a=modifyform&no=${vo.no }">글수정</a>
+						<a href="${pageContext.servletContext.contextPath }/board/modify?no=${vo.no }">글수정</a>
 						</c:if>
 
 				</div>

@@ -16,7 +16,7 @@
 		<c:import url="/WEB-INF/views/include/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="/mysite/board?a=search&p=1"
+				<form id="search_form" action="${pageContext.servletContext.contextPath }/board/list?p=1"
 					method="post">
 					<input type="text" id="kwd" name="kwd" value=""> <input
 						type="submit" value="찾기">
@@ -37,12 +37,12 @@
 									test="${list.depth != 0 }">
 									<img
 										src="${pageContext.request.contextPath }/assets/images/reply.png">
-								</c:if> <a href="${pageContext.servletContext.contextPath }/board?a=view&no=${list.no }">${list.title }</a></td>
+								</c:if> <a href="${pageContext.servletContext.contextPath }/board/view?no=${list.no }&p=${param.p}">${list.title }</a></td>
 							<td>${list.userName }</td>
 							<td>${list.hit }</td>
 							<td>${list.regDate }</td>
 							<c:if test="${authUser.no == list.userNo }">
-								<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${list.no }"
+								<td><a href="${pageContext.servletContext.contextPath }/board/delete?no=${list.no }"
 									class="del">삭제</a></td>
 							</c:if>
 
@@ -52,7 +52,7 @@
 				<div class="pager">
 					<c:choose>
 
-						<c:when test="${list[0].count <= 1 }">
+						<c:when test="${count <= 1 }">
 							<ul>
 								<li><a href="">◀</a></li>
 								<li class="selected">1</li>
@@ -62,18 +62,17 @@
 
 						<c:otherwise>
 							<ul>
-								<li><a href="">◀</a></li>
-								<c:forEach begin="1" end="${list[0].count }" var="i" step="1">
-									<c:if test="${param.p == i }">
+								<li><a href="">${param.p}◀</a></li>
+								<c:forEach begin="1" end="${count }" var="i" step="1">
+									<c:if test="${param.p == i}">
 										<li class="selected">${i }</li>
 									</c:if>
 									<c:if test="${param.p != i }">
 										<c:if test="${!empty kwd}">
-											<li><a
-												href="${pageContext.servletContext.contextPath }/board?a=search&kwd=${param.kwd}&p=${i }">${i }</a></li>
+											<li><a href="${pageContext.servletContext.contextPath }/board/list?p=${i }&kwd=${kwd}">${i }</a></li>
 										</c:if>
 										<c:if test="${empty kwd}">
-											<li><a href="${pageContext.servletContext.contextPath }/board?p=${i }">${i }</a></li>
+											<li><a href="${pageContext.servletContext.contextPath }/board/list?p=${i }">${i }</a></li>
 										</c:if>
 									</c:if>
 								</c:forEach>
@@ -91,7 +90,7 @@
 						</c:when>
 
 						<c:otherwise>
-							<a href="${pageContext.servletContext.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
+							<a href="${pageContext.servletContext.contextPath }/board/write" id="new-book">글쓰기</a>
 						</c:otherwise>
 					</c:choose>
 

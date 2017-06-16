@@ -14,17 +14,16 @@
 		<c:import url="/WEB-INF/views/include/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board?a=write">
-					<input type = "hidden" name = "a" value="write">
-					<input type = "hidden" name = "no" value="${authUser.no }">
+				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board/write">
+					<input type = "hidden" name = "userNo" value="${authUser.no }">
 					<c:choose>
-						<c:when test="${empty param.pgno }">
-						<input type = "hidden" name = "pgno" value="-1">
+						<c:when test="${empty param.pgno || param.pgno==-1}">
+						<input type = "hidden" name = "groupNo" value="-1">
 						</c:when>
 						<c:otherwise>
-						<input type = "hidden" name = "pgno" value="${param.pgno }">
-						<input type = "hidden" name = "pono" value="${param.pono }">
-						<input type = "hidden" name = "pdepth" value="${param.pdepth }">
+						<input type = "hidden" name = "groupNo" value="${param.pgno }">
+						<input type = "hidden" name = "orderNo" value="${param.pono }">
+						<input type = "hidden" name = "depth" value="${param.pdepth }">
 						</c:otherwise>
 					</c:choose>
 					<table class="tbl-ex">
@@ -43,7 +42,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath }/board">취소</a>
+						<a href="${pageContext.servletContext.contextPath }/board/list">취소</a>
 						<input type="submit" value="등록">
 					</div>
 				</form>				

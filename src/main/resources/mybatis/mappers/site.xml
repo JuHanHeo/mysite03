@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site">
+
+	<select id="get" resultType="sitevo">
+		<![CDATA[
+		select no, title, welcome_msg welcomeMsg, profile_img profileImg, description 
+		from site
+		where no=1;
+		]]>
+	</select>
+	
+	<update id="update" parameterType="sitevo">
+		<![CDATA[
+		update site set title = #{title}, welcome_msg = #{welcomeMsg}, description=#{description}
+		]]>
+		
+		<if test="profileImg!=null">
+		<![CDATA[
+		, profile_img=#{profileImg}
+		]]>
+		</if>
+		<![CDATA[
+		where no = 1
+		]]>
+		
+	</update>
+
+</mapper>
