@@ -52,6 +52,11 @@
 		]]>
 
 	</update>
+	<insert id="insert" parameterType="uservo">
+	<![CDATA[
+	insert into member values(null, #{name}, #{email}, password(#{passwd}), #{gender}, 'user')
+	]]>
+	</insert>
 
 
 </mapper>

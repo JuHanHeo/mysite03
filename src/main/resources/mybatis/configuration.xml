@@ -6,6 +6,7 @@
 		<typeAlias alias="uservo" type="com.jx372.mysite.vo.UserVo" />
 		<typeAlias alias="boardvo" type="com.jx372.mysite.vo.BoardVo" />
 		<typeAlias alias="sitevo" type="com.jx372.mysite.vo.SiteVo" />
+		<typeAlias alias="galleryvo" type="com.jx372.mysite.vo.GalleryVo" />
 	</typeAliases>
 	<!-- SQL문을 저장하는 파일 -->
 	<mappers>
@@ -13,6 +14,7 @@
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<mapper resource="mybatis/mappers/board.xml" />
 		<mapper resource="mybatis/mappers/site.xml"/>
+		<mapper resource="mybatis/mappers/gallery.xml"/>
 	</mappers>
 
 

@@ -35,9 +35,6 @@ pageContext.setAttribute("newLine", "\n");
 				<c:forEach items="${list }" var="vo" varStatus="status">
 					<li>
 					<c:set var="count" value="${fn:length(list) }"/>
-					
-					
-					
 						<table>
 							<tr>
 								<td>[${status.index  } : ${status.count }]</td>

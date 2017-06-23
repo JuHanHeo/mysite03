@@ -19,7 +19,7 @@
 					<h2>${siteVo.welcomeMsg }</h2>
 					<p>
 						${siteVo.description }<br><br>
-						<a href="${pageContext.servletContext.contextPath }/guestbook">방명록</a>에 글 남기기<br>
+						<a href="${pageContext.servletContext.contextPath }/guestbook/list">방명록</a>에 글 남기기<br>
 					</p>
 				</div>
 			</div>

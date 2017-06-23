@@ -48,6 +48,18 @@ public class GuestBookController {
 		return "redirect:/guestbook/list";
 	}
 	
+	@RequestMapping("/ajax")
+	public String ajax(Model model){
+		model.addAttribute("list", guestBookService.list());
+		return "/guestbook/index-ajax";
+	}
+	
+	@RequestMapping(value="/ajax", method=RequestMethod.POST)
+	public String ajax(@ModelAttribute GuestBookVo vo){
+		guestBookService.insert(vo);
+		return "redirect:/guestbook/ajax";
+	}
+	
 	
 	
 

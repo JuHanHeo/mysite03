@@ -1,18 +1,9 @@
 package com.jx372.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.jx372.mysite.exception.UserDaoException;
 import com.jx372.mysite.vo.UserVo;
 
@@ -22,46 +13,15 @@ public class UserDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Autowired
-	private DataSource dataSource;
 	
 	public UserVo get(String email){
 		return sqlSession.selectOne("user.getByEmail", email);
 	}
 	
 	public boolean insert(UserVo vo){
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			conn = dataSource.getConnection();
-			String sql = "insert into member values(null, ?, ?, password(?), ?)";
-
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getEmail());
-			pstmt.setString(3, vo.getPasswd());
-			pstmt.setString(4, vo.getGender());
-
-			int count = pstmt.executeUpdate();
-			return (count==1);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally{
-			try {
-				if(conn!=null){
-					conn.close();
-				}
-			} catch (Exception e2) {
-			}
-		}
-
-		return false;
+		int count = sqlSession.insert("user.insert", vo);
+		return (count==1);
 	}
-	//	수정폼
 	public UserVo get(int no){
 		
 		//쿼리 결과를 담을 vo가 없는경우 다음과 같이 사용 

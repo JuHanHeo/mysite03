@@ -16,7 +16,7 @@ public class GuestBookDao {
 //	DataSource dataSource;
 	
 	public boolean insert(GuestBookVo vo){
-		int count = sqlSession.insert("insert", vo);
+		int count = sqlSession.insert("guestbook.insert", vo);
 		return (count==1);
 	}
 	
