@@ -25,12 +25,16 @@ public class GuestBookDao {
 		return list;
 	}
 	
-	public int delete(String no){
+	public boolean delete(GuestBookVo vo){
 //		Map<String, Object> map = new HashMap<String, Object>();
 //		map.put("no", no);
-		int ino = Integer.parseInt(no);
-		int count = sqlSession.update("guestbook.delete", ino);
-		return count;
+		int count = sqlSession.update("guestbook.delete", vo);
+		return 1==count;
+	}
+
+	public List<GuestBookVo> getList(int startNo) {
+		List<GuestBookVo> list = sqlSession.selectList("guestbook.getlist2", startNo);
+		return list;
 	}
 
 }

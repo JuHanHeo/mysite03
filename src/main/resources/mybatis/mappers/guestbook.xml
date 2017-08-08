@@ -3,6 +3,26 @@
 
 <mapper namespace="guestbook">
 
+
+	<select id="getlist2" resultType="guestbookvo" parameterType="int">
+		<![CDATA[
+		select no, name, message, date_format(reg_date,'%Y-%m-%d') as date
+		from guestbook
+		]]>
+		
+		<if test="_parameter > 0">
+		<![CDATA[
+		where no < #{_parameter}
+		]]>
+		</if>
+		
+		<![CDATA[
+		order by 1 desc
+		limit 0, 5
+		]]>
+	</select>
+	
+	
 	<select id="getlist" resultType="guestbookvo">
 		<![CDATA[
 		select no, name, message, date_format(reg_date,'%Y-%m-%d') as date
@@ -20,9 +40,9 @@
 		</selectKey>
 	</insert>
 	
-	<delete id="delete" parameterType="int">
+	<delete id="delete" parameterType="guestbookvo">
 		<![CDATA[
-		delete from guestbook where no = #{no}
+		delete from guestbook where no = #{no} and passwd = #{passwd}
 		]]>
 	</delete>
 

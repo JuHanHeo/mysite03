@@ -20,9 +20,9 @@ public class UserService {
 		
 	}
 	
-	public void join( UserVo userVo ) {
+	public boolean join( UserVo userVo ) {
 		//1.DB에 사용정보 저장
-		userDao.insert( userVo );
+		return userDao.insert( userVo );
 		
 		//2. 인증 메일 보내기
 	}

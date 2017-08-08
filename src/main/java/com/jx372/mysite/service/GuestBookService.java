@@ -23,8 +23,13 @@ public class GuestBookService {
 		return result;
 	}
 	
-	public void delete(String no){
-		guestBookDao.delete(no);
+	public boolean delete(GuestBookVo vo){
+		boolean bool = guestBookDao.delete(vo);
+		return bool;
+	}
+	public List<GuestBookVo> list(int startNo) {
+		List<GuestBookVo> list = guestBookDao.getList(startNo);
+		return list;
 	}
 
 }

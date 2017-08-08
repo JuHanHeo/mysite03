@@ -37,16 +37,17 @@ public class UserController {
 	@RequestMapping( value="/join", method=RequestMethod.POST )
 	public String join( @ModelAttribute @Valid UserVo userVo, BindingResult result, Model model ){
 		if(result.hasErrors()){
-			
-//			List<ObjectError> list = result.getAllErrors();
-//			for (ObjectError e : list) {
-//				System.out.println(" ObjectError : " + e );
-//			}
+
+			//			List<ObjectError> list = result.getAllErrors();
+			//			for (ObjectError e : list) {
+			//				System.out.println(" ObjectError : " + e );
+			//			}
 			model.addAttribute(result.getModel());
 			return "user/joinform";
 
 		}
-				userService.join( userVo );
+		userService.join( userVo );
+		
 		return "redirect:/user/joinsuccess";
 	}
 
